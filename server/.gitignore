@@ -1,0 +1,11 @@
+# Exclude specific files
+ngrok.exe
+
+# Exclude directories and their contents
+dataset/
+models/
+projectscreenshot/
+__pycache__/
+instance/
+temp/
+uploads/
