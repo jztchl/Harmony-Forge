@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, avoid_print, use_build_context_synchronously, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -57,13 +59,13 @@ class GenerateMultiInstrumentMusicPage extends StatefulWidget {
 
 class _GenerateMultiInstrumentMusicPageState
     extends State<GenerateMultiInstrumentMusicPage> {
-  TextEditingController durationController = TextEditingController();
+  TextEditingController durationController = TextEditingController(text: '30');
   double temperatureValue = 0.5;
   int tempoValue = 120; // Default tempo value
   String selectedModel = '';
   List<String> selectedInstruments = ['Piano']; // Default instrument
   List<String> models = [];
-  List<String> instruments = [
+  final List<String> instruments = [
     'Accordion',
     'Acoustic Bass',
     'Acoustic Guitar',
@@ -214,7 +216,7 @@ class _GenerateMultiInstrumentMusicPageState
       });
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -234,7 +236,7 @@ class _GenerateMultiInstrumentMusicPageState
     int durationSeconds = int.tryParse(durationController.text) ?? 0;
     double temperature = temperatureValue;
     int tempo = tempoValue;
-    final storage = const FlutterSecureStorage();
+    final storage = FlutterSecureStorage();
     String? storedToken = await storage.read(key: 'jwtToken');
 
     if (durationSeconds <= 0) {
@@ -293,7 +295,6 @@ class _GenerateMultiInstrumentMusicPageState
           print('File saved to: $filePath');
           final audioSource = BytesSource(response.bodyBytes);
           await player.play(audioSource);
-          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('File saved to Generated Files'),
@@ -322,7 +323,7 @@ class _GenerateMultiInstrumentMusicPageState
       });
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -382,7 +383,7 @@ class _GenerateMultiInstrumentMusicPageState
               ),
             ),
             child: isLoading
-                ? Center(
+                ? const Center(
                     child: SizedBox(
                       width: 40,
                       height: 40,
@@ -434,10 +435,10 @@ class _GenerateMultiInstrumentMusicPageState
                                   selectedOptionIcon:
                                       const Icon(Icons.check_circle),
                                   selectedOptionBackgroundColor:
-                                      Color.fromARGB(116, 105, 27, 154),
+                                      const Color.fromARGB(116, 105, 27, 154),
                                   hintColor: Colors.white,
                                   fieldBackgroundColor:
-                                      Color.fromARGB(116, 105, 27, 154),
+                                      const Color.fromARGB(116, 105, 27, 154),
                                   selectedOptionTextColor: Colors.white,
                                 ),
                                 const Text(
@@ -471,10 +472,10 @@ class _GenerateMultiInstrumentMusicPageState
                                   selectedOptionIcon:
                                       const Icon(Icons.check_circle),
                                   selectedOptionBackgroundColor:
-                                      Color.fromARGB(116, 105, 27, 154),
+                                      const Color.fromARGB(116, 105, 27, 154),
                                   hintColor: Colors.white,
                                   fieldBackgroundColor:
-                                      Color.fromARGB(116, 105, 27, 154),
+                                      const Color.fromARGB(116, 105, 27, 154),
                                   selectedOptionTextColor: Colors.white,
                                 ),
                                 TextFormField(
@@ -484,7 +485,8 @@ class _GenerateMultiInstrumentMusicPageState
                                     FilteringTextInputFormatter.digitsOnly,
                                   ],
                                   decoration: const InputDecoration(
-                                      labelText: 'Duration (seconds)',
+                                      labelText:
+                                          'Duration (seconds) default:30',
                                       hintText: 'Enter duration in seconds',
                                       labelStyle: TextStyle(
                                         color: Color.fromARGB(255, 255, 255,
@@ -607,7 +609,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).primaryColor;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

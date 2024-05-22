@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -42,14 +44,14 @@ class AuthService {
       // No internet connection
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Server unreachable'),
           duration: Duration(seconds: 6),
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, use_super_parameters, prefer_const_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,7 +18,7 @@ class FeedbackPopup extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors
           .blue.shade900, // Set the background color to a darker shade of blue
-      title: Text(
+      title: const Text(
         'Feedback',
         style: TextStyle(
           fontSize: 24,
@@ -34,7 +36,7 @@ class FeedbackPopup extends StatelessWidget {
             controller: feedbackController,
             decoration: InputDecoration(
               hintText: 'Enter your feedback...',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: Colors.white, // Set the hint text color to white
                 fontFamily: 'Quicksand', // Set the font family to Quicksand
               ),
@@ -47,7 +49,7 @@ class FeedbackPopup extends StatelessWidget {
                   0.3), // Set the fill color to a lighter shade of grey with 30% opacity
             ),
             maxLines: 5,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white, // Set the text color to white
               fontFamily: 'Quicksand', // Set the font family to Quicksand
             ),
@@ -62,7 +64,7 @@ class FeedbackPopup extends StatelessWidget {
                 Navigator.of(context).pop(); // Close the dialog
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text('Please enter valid feedback'),
                     duration: Duration(seconds: 3),
                   ),
@@ -81,7 +83,7 @@ class FeedbackPopup extends StatelessWidget {
                 ),
               ),
             ),
-            child: Text(
+            child: const Text(
               'Send',
               style: TextStyle(
                 color: Colors.white, // Set the text color to white
@@ -104,7 +106,7 @@ class FeedbackPopup extends StatelessWidget {
 
   Future<void> sendFeedback(BuildContext context, String message) async {
     String apiUrl = FEEDBACK_ENDPOINT; // Replace with your API URL
-    final storage = const FlutterSecureStorage();
+    final storage = FlutterSecureStorage();
     String? storedToken = await storage.read(key: 'jwtToken');
     final client = http.Client();
 
@@ -122,7 +124,7 @@ class FeedbackPopup extends StatelessWidget {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Feedback sent successfully'),
             duration: Duration(seconds: 3),
           ),
@@ -135,7 +137,7 @@ class FeedbackPopup extends StatelessWidget {
       // No internet connection
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),

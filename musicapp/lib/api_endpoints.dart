@@ -1,5 +1,7 @@
 // api_endpoints.dart
 
+// ignore_for_file: constant_identifier_names
+
 // Define the base URL for the API.
 // const String BASE_URL = 'http://192.168.168.241:5000';
 // const String BASE_URL = 'http://10.0.2.2:5000';

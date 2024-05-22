@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,7 +40,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Future<void> registerUser(String name, String email, String password) async {
     try {
-      print("here");
       var url = Uri.parse(REGISTER_ENDPOINT);
       var client = http.Client();
       var response = await client.post(
@@ -55,18 +56,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
         // Registration successful
         print('Registration successful');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Registration successful. Please log in.'),
             duration: Duration(seconds: 3),
           ),
         );
         // Delay navigation to ensure the SnackBar is visible
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
         Navigator.pop(context); // Pop the success message
         Navigator.pushReplacement(
           // Navigate to login page
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
         // Registration failed
@@ -75,7 +76,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           SnackBar(
             content: Text(
                 'Registration failed: ${response.statusCode} ${json.decode(response.body)['msg']}'),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -83,7 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // No internet connection
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 3),
         ),
@@ -93,7 +94,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error registering user: $e'),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -116,7 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         children: [
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.blue, Colors.purple],
                   begin: Alignment.topCenter,
@@ -143,7 +144,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         const SizedBox(height: 30),
                         TextFormField(
                           controller: nameController,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
                             labelText: 'Full Name',
                             labelStyle: TextStyle(color: Colors.white),
@@ -169,7 +170,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: emailController,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             labelText: 'Email',
@@ -201,18 +202,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: passwordController,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           obscureText: _obscureText,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(),
-                            enabledBorder: OutlineInputBorder(
+                            labelStyle: const TextStyle(color: Colors.white),
+                            border: const OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors
                                       .white), // Set the border color to white
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors
                                       .white), // Set the focused border color to white
@@ -236,18 +237,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: confirmPasswordController,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           obscureText: _obscureText,
                           decoration: InputDecoration(
                             labelText: 'Confirm Password',
-                            labelStyle: TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(),
-                            enabledBorder: OutlineInputBorder(
+                            labelStyle: const TextStyle(color: Colors.white),
+                            border: const OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors
                                       .white), // Set the border color to white
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors
                                       .white), // Set the focused border color to white

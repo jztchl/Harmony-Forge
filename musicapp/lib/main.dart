@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_super_parameters, library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,7 +21,7 @@ String? displayName;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Add this line
   Widget homePage = const LoginPage();
-  const storage = FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
   String? jwtRefreshToken = await storage.read(key: 'jwtRefreshToken');
   if (jwtRefreshToken != null) {
     homePage = const MainPage();
@@ -83,11 +85,11 @@ class _MainPageState extends State<MainPage> {
   ];
 
   final List<Widget> _screens = [
-    GenerateMusicPage(),
-    GenerateMultiInstrumentMusicPage(),
-    GeneratedFilesPage(),
-    ConvertInstrumentPage(),
-    ChangePasswordPage(),
+    const GenerateMusicPage(),
+    const GenerateMultiInstrumentMusicPage(),
+    const GeneratedFilesPage(),
+    const ConvertInstrumentPage(),
+    const ChangePasswordPage(),
   ];
 
   @override
@@ -313,7 +315,6 @@ void onLoadRefresh(BuildContext context) {
   } catch (e) {
     print('Error refreshing token: $e');
   }
-  ;
 }
 
 void periodicTokenRefresh(BuildContext context) {

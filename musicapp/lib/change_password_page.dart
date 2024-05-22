@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, use_super_parameters, library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'api_endpoints.dart';
@@ -23,7 +25,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   bool _obscureConfirmPassword = true;
 
   Future<void> changePassword(String oldPassword, String newPassword) async {
-    final storage = const FlutterSecureStorage();
+    // ignore: prefer_const_constructors
+    final storage = FlutterSecureStorage();
     String? storedToken = await storage.read(key: 'jwtToken');
     try {
       var url = Uri.parse(CHANGE_PASSWORD_ENDPOINT);
@@ -41,7 +44,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Password changed successfully'),
             duration: Duration(seconds: 3),
           ),
@@ -55,9 +58,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       }
     } on SocketException {
       // No internet connection
-      print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -117,24 +119,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
+                      const Text(
                         'Enter your old password and new password to change',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: oldPasswordController,
                         obscureText: _obscureOldPassword,
                         decoration: InputDecoration(
                           labelText: 'Old Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          border: const OutlineInputBorder(),
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the border color to white
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the focused border color to white
@@ -160,20 +162,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextFormField(
                         controller: newPasswordController,
                         obscureText: _obscureNewPassword,
                         decoration: InputDecoration(
                           labelText: 'New Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          border: const OutlineInputBorder(),
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the border color to white
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the focused border color to white
@@ -194,20 +196,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         ),
                         validator: validateNewPassword,
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextFormField(
                         controller: confirmPasswordController,
                         obscureText: _obscureConfirmPassword,
                         decoration: InputDecoration(
                           labelText: 'Confirm New Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
+                          labelStyle: const TextStyle(color: Colors.white),
+                          border: const OutlineInputBorder(),
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the border color to white
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors
                                     .white), // Set the focused border color to white
@@ -237,7 +239,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -247,7 +249,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             changePassword(oldPassword, newPassword);
                           }
                         },
-                        child: Text('Change Password'),
+                        child: const Text('Change Password'),
                       ),
                     ],
                   ),
@@ -256,10 +258,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             ),
             if (errorMessage.isNotEmpty)
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
           ],

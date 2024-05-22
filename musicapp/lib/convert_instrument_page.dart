@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -73,7 +75,7 @@ class _ConvertInstrumentPageState extends State<ConvertInstrumentPage> {
             'Failed to load available models. Please check your network connection.';
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -87,7 +89,7 @@ class _ConvertInstrumentPageState extends State<ConvertInstrumentPage> {
   }
 
   Future<void> sendDataToApi() async {
-    final storage = const FlutterSecureStorage();
+    final storage = FlutterSecureStorage();
     String? storedToken = await storage.read(key: 'jwtToken');
     if (file == null) {
       setState(() {

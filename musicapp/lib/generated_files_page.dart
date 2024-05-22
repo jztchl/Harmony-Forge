@@ -1,10 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'dart:io';
-import 'package:share/share.dart'; // Import share package
-import 'package:flutter/services.dart'; // Import services.dart for Clipboard
-import 'package:fluttertoast/fluttertoast.dart'; // Import fluttertoast package
+import 'package:share/share.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 
@@ -101,7 +101,7 @@ class _GeneratedFilesPageState extends State<GeneratedFilesPage> {
                   return ListTile(
                     title: Text(
                       generatedFiles[index].fileName,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     onTap: () {
                       openFile(generatedFiles[index].filePath);
@@ -111,7 +111,7 @@ class _GeneratedFilesPageState extends State<GeneratedFilesPage> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.share),
-                          color: Color.fromARGB(
+                          color: const Color.fromARGB(
                               255, 187, 255, 0), // Apply blue color to the icon
                           onPressed: () {
                             shareFile(generatedFiles[index]);
@@ -243,7 +243,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).primaryColor;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

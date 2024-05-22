@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -56,7 +58,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Future<void> sendOtp(String username) async {
     try {
       var url = Uri.parse(FORGOT_PASSWORD_ENDPOINT);
-      print("hi");
       var response = await http.post(
         url,
         body: jsonEncode({'username': username}),
@@ -66,7 +67,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       if (response.statusCode == 200) {
         // OTP sent successfully
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('OTP sent to your email'),
             duration: Duration(seconds: 3),
           ),
@@ -85,7 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       // No internet connection
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -117,7 +118,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       if (response.statusCode == 200) {
         // Password reset successful
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Password reset successfully'),
             duration: Duration(seconds: 3),
           ),
@@ -135,7 +136,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       // No internet connection
       print('No internet connection');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -180,17 +181,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 children: [
                   if (!otpSent) ...[
                     // Add this line
-                    Text(
+                    const Text(
                       'Enter your registered email to receive OTP',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextField(
                       controller: usernameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email',
                         labelStyle: TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
@@ -207,7 +208,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         });
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         String username = usernameController.text.trim();
@@ -221,20 +222,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           });
                         }
                       },
-                      child: Text('Send OTP'),
+                      child: const Text('Send OTP'),
                     ),
                   ],
                   if (otpSent) ...[
                     // Add this line
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'Enter Latest OTP and new password to reset',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextField(
                       controller: otpController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'OTP',
                         labelStyle: TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
@@ -246,19 +247,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: newPasswordController,
                       obscureText:
                           _newPasswordObscured, // new variable to track password visibility
                       decoration: InputDecoration(
                         labelText: 'New Password',
-                        labelStyle: TextStyle(color: Colors.white),
-                        border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
                         suffixIcon: IconButton(
@@ -277,19 +278,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: confirmPasswordController,
                       obscureText:
                           _confirmPasswordObscured, // new variable to track password visibility
                       decoration: InputDecoration(
                         labelText: 'Confirm New Password',
-                        labelStyle: TextStyle(color: Colors.white),
-                        border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
                         suffixIcon: IconButton(
@@ -309,7 +310,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         String username = usernameController.text.trim();
@@ -343,9 +344,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           });
                         }
                       },
-                      child: Text('Reset Password'),
+                      child: const Text('Reset Password'),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
                         String username = usernameController.text.trim();
@@ -359,15 +360,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           });
                         }
                       },
-                      child: Text('Resend OTP'),
+                      child: const Text('Resend OTP'),
                     ),
                   ],
                   if (errorMessage.isNotEmpty)
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
                         errorMessage,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                 ],

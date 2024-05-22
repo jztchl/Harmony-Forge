@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, avoid_print, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -55,13 +57,13 @@ class GenerateMusicPage extends StatefulWidget {
 }
 
 class _GenerateMusicPageState extends State<GenerateMusicPage> {
-  TextEditingController durationController = TextEditingController();
+  TextEditingController durationController = TextEditingController(text: '30');
   double temperatureValue = 0.5;
   int tempoValue = 120;
   String selectedModel = '';
   String selectedInstrument = 'Piano';
   List<String> models = [];
-  List<String> instruments = [
+  final List<String> instruments = [
     'Accordion',
     'AcousticBass',
     'AcousticGuitar',
@@ -212,7 +214,7 @@ class _GenerateMusicPageState extends State<GenerateMusicPage> {
             'Failed to load available models. Please check your network connection.';
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('No internet connection'),
           duration: Duration(seconds: 6),
         ),
@@ -232,7 +234,7 @@ class _GenerateMusicPageState extends State<GenerateMusicPage> {
     int durationSeconds = int.tryParse(durationController.text) ?? 0;
     double temperature = temperatureValue;
     int tempo = tempoValue;
-    final storage = const FlutterSecureStorage();
+    final storage = FlutterSecureStorage();
     String? storedToken = await storage.read(key: 'jwtToken');
 
     if (durationSeconds <= 0) {
@@ -462,7 +464,7 @@ class _GenerateMusicPageState extends State<GenerateMusicPage> {
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
                                 decoration: const InputDecoration(
-                                  labelText: 'Duration (seconds)',
+                                  labelText: 'Duration (seconds) default:30',
                                   hintText: 'Enter duration in seconds',
                                   labelStyle: TextStyle(
                                     color: Color.fromARGB(255, 255, 255, 255),
@@ -583,7 +585,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).primaryColor;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
