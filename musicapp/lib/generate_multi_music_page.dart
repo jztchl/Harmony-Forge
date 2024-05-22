@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:open_file/open_file.dart';
 import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'api_endpoints.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
 
 final ThemeData appTheme = ThemeData(
   primarySwatch: Colors.green,
@@ -89,7 +91,6 @@ class _GenerateMultiInstrumentMusicPageState
     'Conga Drum',
     'Contrabass',
     'Contrabassoon',
-    'Cowbell',
     'Crash Cymbals',
     'Cymbals',
     'Dulcimer',
@@ -108,7 +109,7 @@ class _GenerateMultiInstrumentMusicPageState
     'Harmonica',
     'Harp',
     'Harpsichord',
-    'Hi-Hat Cymbal',
+    'Hi Hat Cymbal',
     'Horn',
     'Kalimba',
     'Keyboard Instrument',
@@ -149,7 +150,6 @@ class _GenerateMultiInstrumentMusicPageState
     'String Instrument',
     'Suspended Cymbal',
     'Taiko',
-    'Tam Tam',
     'Tambourine',
     'Temple Block',
     'Tenor',
@@ -170,7 +170,6 @@ class _GenerateMultiInstrumentMusicPageState
     'Viola',
     'Violin',
     'Violoncello',
-    'Vocalist',
     'Whip',
     'Whistle',
     'Wind Machine',
@@ -182,7 +181,7 @@ class _GenerateMultiInstrumentMusicPageState
 
   bool isLoading = true;
   String errorMessage = '';
-
+  late AudioPlayer player = AudioPlayer();
   Future<void> getAvailableModels() async {
     setState(() {
       isLoading = true;
@@ -292,9 +291,17 @@ class _GenerateMultiInstrumentMusicPageState
           await file.writeAsBytes(response.bodyBytes);
 
           print('File saved to: $filePath');
-
+          final audioSource = BytesSource(response.bodyBytes);
+          await player.play(audioSource);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('File saved to Generated Files'),
+              duration: Duration(seconds: 2),
+            ),
+          );
           // Open the file
-          await OpenFile.open(filePath);
+          // await OpenFile.open(filePath);
         } else {
           print('Downloads directory not found');
         }
@@ -341,6 +348,13 @@ class _GenerateMultiInstrumentMusicPageState
   void initState() {
     super.initState();
     getAvailableModels();
+    player = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   @override
@@ -529,10 +543,166 @@ class _GenerateMultiInstrumentMusicPageState
                             ),
                           ),
                         ),
+                        PlayerWidget(player: player),
                       ],
                     ),
                   ),
           ),
         ));
+  }
+}
+
+class PlayerWidget extends StatefulWidget {
+  final AudioPlayer player;
+  const PlayerWidget({required this.player, super.key});
+  @override
+  _PlayerWidgetState createState() => _PlayerWidgetState();
+}
+
+class _PlayerWidgetState extends State<PlayerWidget> {
+  PlayerState? _playerState;
+  Duration? _duration;
+  Duration? _position;
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _playerStateChangeSubscription;
+  bool get _isPlaying => _playerState == PlayerState.playing;
+  bool get _isPaused => _playerState == PlayerState.paused;
+  String get _durationText => _duration?.toString().split('.').first ?? '';
+  String get _positionText => _position?.toString().split('.').first ?? '';
+  AudioPlayer get player => widget.player;
+  @override
+  void initState() {
+    super.initState();
+    _playerState = player.state;
+    player.getDuration().then(
+          (value) => setState(() {
+            _duration = value;
+          }),
+        );
+    player.getCurrentPosition().then(
+          (value) => setState(() {
+            _position = value;
+          }),
+        );
+    _initStreams();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
+  void dispose() {
+    _durationSubscription?.cancel();
+    _positionSubscription?.cancel();
+    _playerCompleteSubscription?.cancel();
+    _playerStateChangeSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).primaryColor;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              key: const Key('play_button'),
+              onPressed: _isPlaying ? null : _play,
+              iconSize: 48.0,
+              icon: const Icon(Icons.play_arrow),
+              color: Colors.white,
+            ),
+            IconButton(
+              key: const Key('pause_button'),
+              onPressed: _isPlaying ? _pause : null,
+              iconSize: 48.0,
+              icon: const Icon(Icons.pause),
+              color: Colors.white,
+            ),
+            IconButton(
+              key: const Key('stop_button'),
+              onPressed: _isPlaying || _isPaused ? _stop : null,
+              iconSize: 48.0,
+              icon: const Icon(Icons.stop),
+              color: Colors.white,
+            ),
+          ],
+        ),
+        Slider(
+          onChanged: (value) {
+            final duration = _duration;
+            if (duration == null) {
+              return;
+            }
+            final position = value * duration.inMilliseconds;
+            player.seek(Duration(milliseconds: position.round()));
+          },
+          value: (_position != null &&
+                  _duration != null &&
+                  _position!.inMilliseconds > 0 &&
+                  _position!.inMilliseconds < _duration!.inMilliseconds)
+              ? _position!.inMilliseconds / _duration!.inMilliseconds
+              : 0.0,
+        ),
+        Text(
+          _position != null
+              ? '$_positionText / $_durationText'
+              : _duration != null
+                  ? _durationText
+                  : '',
+          style: const TextStyle(fontSize: 16.0),
+        ),
+      ],
+    );
+  }
+
+  void _initStreams() {
+    _durationSubscription = player.onDurationChanged.listen((duration) {
+      setState(() => _duration = duration);
+    });
+    _positionSubscription = player.onPositionChanged.listen(
+      (p) => setState(() => _position = p),
+    );
+
+    _playerCompleteSubscription = player.onPlayerComplete.listen((event) {
+      setState(() {
+        _playerState = PlayerState.stopped;
+        _position = Duration.zero;
+      });
+    });
+
+    _playerStateChangeSubscription =
+        player.onPlayerStateChanged.listen((state) {
+      setState(() {
+        _playerState = state;
+      });
+    });
+  }
+
+  Future<void> _play() async {
+    await player.resume();
+    setState(() => _playerState = PlayerState.playing);
+  }
+
+  Future<void> _pause() async {
+    await player.pause();
+    setState(() => _playerState = PlayerState.paused);
+  }
+
+  Future<void> _stop() async {
+    await player.stop();
+    setState(() {
+      _playerState = PlayerState.stopped;
+      _position = Duration.zero;
+    });
   }
 }

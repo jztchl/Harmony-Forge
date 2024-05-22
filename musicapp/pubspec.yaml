@@ -44,7 +44,7 @@ dependencies:
   jwt_decode: 0.3.1
   multi_dropdown: ^2.1.4
   carousel_slider: ^4.0.0
- 
+  audioplayers: ^6.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -398,7 +398,7 @@ def handle_generate_multi_music():
     if request.is_json:
         data = request.get_json()
         current_user = get_jwt_identity()
-        print(f"{current_user['username']} in generate multi music")
+        print(f"{current_user} in generate multi music")
         if data:
             # Check if all required fields are present
             required_fields = ['model_folder', 'duration_seconds', 'temperature', 'tempo', 'instrument_names']
