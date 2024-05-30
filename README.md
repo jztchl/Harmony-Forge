@@ -51,17 +51,14 @@ The Flask server acts as the backend for the Harmony Forge project. It handles m
    pip install -r needs.txt
    ```
 
-4. Set up environment variables:
+4. Set up Configuration variables:
    Configure the following in the config.py after adding it:
    ```python
 
-import os
-from datetime import timedelta
-
-
-
    ```
 
+import os
+from datetime import timedelta
 class Config: 
     SECRET_KEY = 'your_secret_key_here'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///users.db'
