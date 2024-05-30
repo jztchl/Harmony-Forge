@@ -57,7 +57,7 @@ The Flask server acts as the backend for the Harmony Forge project. It handles m
 import os
 from datetime import timedelta
 
-class Config:
+class Config
     SECRET_KEY = 'your_secret_key_here'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///users.db'
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=3)
