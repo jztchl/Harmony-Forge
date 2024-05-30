@@ -52,16 +52,20 @@ The Flask server acts as the backend for the Harmony Forge project. It handles m
    ```
 
 4. Set up environment variables:
-   Configure the following in the flask_app.py:
+   Configure the following in the config.py after adding it:
    ```plaintext
-   SECRET_KEY=your_secret_key_here
-   DATABASE_URI=sqlite:///users.db
-   MAIL_SERVER=smtp.gmail.com
-   MAIL_PORT=587
-   MAIL_USE_TLS=True
-   MAIL_DEFAULT_SENDER=your_email@gmail.com
-   MAIL_USERNAME=your_email@gmail.com
-   MAIL_PASSWORD=your_email_password
+ 
+    SECRET_KEY = 'your_secret_key_here'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///users.db'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=3)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
+    MAIL_SERVER = 'smtp.example.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_DEFAULT_SENDER = your_email@example.com
+    MAIL_USERNAME = your_email@example.com
+    MAIL_PASSWORD = your_email_password
+
    ```
 
 5. Run the Flask server:
