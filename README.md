@@ -140,55 +140,22 @@ The Harmony Forge project includes an Android Flutter app that serves as the cli
 
 7. The Flutter app will build and run on your connected Android device or emulator.
 
-### Sample Music File Space:
 
-``
-    <h1>Multiple Instrument Samples</h1>
-    <audio controls>
-        <source src="samples/Multiple%20instrument/1.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Multiple%20instrument/2.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Multiple%20instrument/3.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Multiple%20instrument/4.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
+## Sample Music Files
 
-    <h1>Single Instrument Samples</h1>
-    <audio controls>
-        <source src="samples/Single%20Instrument1.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Single%20Instrument2.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Single%20Instrument3.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Single%20Instrument4.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
-    <br>
-    <audio controls>
-        <source src="samples/Single%20Instrument5.aac" type="audio/aac">
-        Your browser does not support the audio element.
-    </audio>
+### Multiple Instrument Samples
+- [Download Multiple Instrument Sample 1](samples/Multiple%20instrument/1.aac)
+- [Download Multiple Instrument Sample 2](samples/Multiple%20instrument/2.aac)
+- [Download Multiple Instrument Sample 3](samples/Multiple%20instrument/3.aac)
+- [Download Multiple Instrument Sample 4](samples/Multiple%20instrument/4.aac)
+
+### Single Instrument Samples
+- [Download Single Instrument Sample 1](samples/Single%20Instrument1.aac)
+- [Download Single Instrument Sample 2](samples/Single%20Instrument2.aac)
+- [Download Single Instrument Sample 3](samples/Single%20Instrument3.aac)
+- [Download Single Instrument Sample 4](samples/Single%20Instrument4.aac)
+- [Download Single Instrument Sample 5](samples/Single%20Instrument5.aac)
+
 
 
 ---
