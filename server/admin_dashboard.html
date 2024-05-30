@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="manifest" href="/static/manifest.json">
+    <style>
+        /* Global styles */
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #1a1a1a;
+            /* Dark Gray */
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #333;
+            /* Darker Gray on hover */
+        }
+
+        .btn-danger {
+            background-color: #b30000;
+            /* Dark Red */
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #990000;
+            /* Darker Red on hover */
+        }
+
+        .content {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #b30000;
+            /* Dark Red for logout button */
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #990000;
+            /* Darker Red on hover */
+        }
+
+        .user-management-container,
+        .music-management-container {
+            border: 2px solid #333;
+            /* Dark Gray */
+            border-radius: 10px;
+            background-color: #e6e6e6;
+            /* Light Gray */
+            max-height: 470px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .feedback-container {
+            border: 2px solid #333;
+            /* Dark Gray */
+            border-radius: 10px;
+            background-color: #e6e6e6;
+            /* Light Gray */
+            max-height: 470px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .feedback-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            /* Light Gray */
+            padding-bottom: 10px;
+        }
+
+        .feedback-item p {
+            margin: 5px 0;
+        }
+
+        .mark-read-btn {
+            margin-right: 10px;
+            background-color: #064e0d;
+            /* Dark Gray */
+            color: #fff;
+        }
+
+
+        .music-list,
+        .music-form {
+            flex-basis: 48%;
+        }
+
+        .music-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-table-container {
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .music-table-container {
+            max-height: 390px;
+            overflow-y: auto;
+        }
+
+        #usertable,
+        #modelTable {
+            width: 100%;
+        }
+
+        /* CSS for Fancy Loading Indicator */
+        .loading-indicator {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .loading-spinner {
+            border: 6px solid rgba(255, 255, 255, 0.4);
+            border-left-color: #FFD700;
+            /* Gold color for the spinner */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-weight: bold;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Additional Styles */
+        .delete-btn {
+            background-color: #b30000;
+            /* Dark Red for delete button */
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background-color: #990000;
+            /* Darker Red on hover */
+        }
+
+        .train-btn {
+            background-color: #006600;
+            /* Dark Green */
+            color: #fff;
+        }
+
+        .train-btn:hover {
+            background-color: #004d00;
+            /* Darker Green on hover */
+        }
+
+        .choose-file {
+            background-color: #333;
+            /* Dark Gray for file input button */
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .choose-file:hover {
+            background-color: #1a1a1a;
+            /* Darker Gray on hover */
+        }
+
+        .user-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .update-btn,
+        .delete-btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .update-btn {
+            background-color: #FFD700;
+            /* Gold for update button */
+            color: #333;
+        }
+
+        .update-btn:hover {
+            background-color: #e6b800;
+            /* Dark Gold on hover */
+        }
+
+        .delete-btn {
+            background-color: #b30000;
+            /* Dark Red for delete button */
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background-color: #990000;
+            /* Darker Red on hover */
+        }
+
+        label {
+            display: block;
+            /* Ensure labels appear on separate lines */
+            margin-bottom: 8px;
+            /* Add some space below labels */
+            font-size: 18px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            /* Ensure padding doesn't affect width */
+            margin-bottom: 20px;
+            /* Add space below input fields */
+        }
+
+        .login-container {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-wrapper {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 300px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .form-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+
+        .user-form-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #171717;
+            border-radius: 5px;
+            background-color: #e6e6e6;
+        }
+
+        .user-form-container h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .user-form-container form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .user-form-container form input[type="text"],
+        .user-form-container form input[type="password"],
+        .user-form-container form input[type="checkbox"],
+        .user-form-container form button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .user-form-container form button {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .user-form-container form button:hover {
+            background-color: #0056b3;
+        }
+        .search-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    </style>
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div id="content" class="content">
+            <h2>Loading...</h2>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const refreshToken = localStorage.getItem("refreshToken");
+            if (refreshToken) {
+                try {
+                    const response = await fetch("/refresh", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${refreshToken}`,
+                        },
+                    });
+                    const data = await response.json();
+                    const accessToken = data.access_token;
+                    localStorage.setItem("accessToken", accessToken);
+                    loadMainContent();
+                } catch (error) {
+                    displayLogin();
+                    console.error("Error refreshing token:", error);
+
+                }
+            } else {
+                displayLogin();
+            }
+        });
+
+        function switchToUserManagement() {
+            loadMainContent();
+        }
+
+        async function switchToMusicManagement() {
+            document.getElementById("content").innerHTML = `
+            <div>
+            <button class="btn btn-primary" onclick="switchToUserManagement()">
+                User Management
+            </button>
+            <button class="btn btn-primary" onclick="switchToMusicManagement()">
+                Music Management
+            </button>
+            <button class="btn btn-primary" onclick="switchToFeedback()"> <!-- Added feedback button here -->
+                Feedback Management
+            </button>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <h1>Music Management</h1>
+        <div class="music-management-container">
+            <div id="availableModels" class="music-list">
+                <h2>Available Models</h2>
+                <div class="music-table-container">
+                    <table id="modelTable">
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modelList">
+                            <!-- Available models will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="trainModel" class="music-form">
+                <h2>Train a Model</h2>
+                <form id="trainModelForm">
+                    <label for="modelName">Model Name:</label>
+                    <input type="text" id="modelName" name="modelName" placeholder="Enter model name" required>
+                    <label for="midiFiles">Upload MIDI Files:</label>
+                    <input type="file" id="midiFiles" class="choose-file" name="midiFiles" multiple accept=".mid, audio/midi">
+                    <br><br>
+                     <button type="submit" class="btn train-btn">Train</button>
+                  
+                </form>
+                <!-- HTML for Fancy Loading Indicator -->
+<div id="loadingIndicator" class="loading-indicator">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Training in progress.<br> This process may take several hours.<br> Your patience is appreciated.<br> Please do not close or navigate away from this page.</div>
+</div>            </div>
+        </div>
+    `;
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await fetch("/get_available_model_folders", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            const data = await response.json();
+
+            const modelList = document.getElementById("modelList");
+            modelList.innerHTML = ""; // Clear the model list first
+
+            data.model_folders.forEach((model) => {
+                const row = document.createElement("tr");
+
+                const modelNameCell = document.createElement("td");
+                modelNameCell.textContent = model;
+
+                const deleteButtonCell = document.createElement("td");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.className = "btn delete-btn";
+                deleteButton.addEventListener("click", async () => {
+                    const confirmed = confirm(
+                        `Are you sure you want to delete the model '${model}'?`
+                    );
+                    if (confirmed) {
+                        await deleteModel(model);
+                        row.remove(); // Remove the row from the table
+                    }
+                });
+                deleteButtonCell.appendChild(deleteButton);
+
+                row.appendChild(modelNameCell);
+                row.appendChild(deleteButtonCell);
+                modelList.appendChild(row);
+            });
+
+            // Add event listener for the train model form submission
+            document
+                .getElementById("trainModelForm")
+                .addEventListener("submit", async (event) => {
+                    event.preventDefault();
+                    const modelName = document.getElementById("modelName").value.trim();
+                    const midiFilesInput = document.getElementById("midiFiles");
+                    const formData = new FormData();
+
+                    formData.append("modelName", modelName);
+
+                    for (const file of midiFilesInput.files) {
+                        formData.append("midiFiles", file);
+                    }
+
+                    if (modelName && midiFilesInput.files.length > 0) {
+                        // Check if the model name already exists
+                        const modelExists = await checkModelExists(modelName);
+                        if (modelExists) {
+                            alert(
+                                `A model with the name '${modelName}' already exists. Please choose a different name.`
+                            );
+                        } else {
+                            await trainModel(formData);
+                        }
+                    } else {
+                        alert(
+                            "Please enter a valid model name and upload at least one MIDI file."
+                        );
+                    }
+                });
+
+            async function checkModelExists(modelName) {
+                try {
+                    const accessToken = localStorage.getItem("accessToken");
+                    const response = await fetch("/get_available_model_folders", {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const modelFolders = data.model_folders;
+                        return modelFolders.includes(modelName);
+                    } else {
+                        throw new Error("Failed to fetch available models.");
+                    }
+                } catch (error) {
+                    console.error("Fetch available models error:", error);
+                    alert("Failed to fetch available models.");
+                    return false; // Return false by default if an error occurs
+                }
+            }
+        }
+
+
+        async function trainModel(formData) {
+            // Show the loading indicator
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'block';
+
+            try {
+                const accessToken = localStorage.getItem("accessToken");
+                const response = await fetch("/train_model", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: formData,
+                });
+
+                // Hide the loading indicator once the response is received
+                loadingIndicator.style.display = 'none';
+
+                const data = await response.json();
+                if (response.status === 200) {
+                    alert(data.message || "Model trained successfully.");
+                    switchToMusicManagement();
+                } else if (response.status === 400) {
+                    alert(data.message || "Bad Request: Failed to train model.");
+                } else if (response.status === 403) {
+                    alert("Forbidden: You are not authorized to access this resource.");
+                } else {
+                    throw new Error(data.message || "Failed to train model.");
+                }
+            } catch (error) {
+                console.error("Train model error:", error);
+                alert("Failed to train model.");
+            }
+        }
+
+
+        async function deleteModel(modelName) {
+            const accessToken = localStorage.getItem("accessToken");
+            try {
+                const response = await fetch(
+                    `/admin/models/delete/${encodeURIComponent(modelName)}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
+                );
+                if (response.status === 200) {
+                    const data = await response.json();
+                    // Remove the deleted model from the UI
+
+                    alert(data.message || `Model '${modelName}' deleted successfully.`);
+                } else if (response.status === 404) {
+                    const data = await response.json();
+                    throw new Error(data.message || "Model not found.");
+                } else {
+                    throw new Error("Failed to delete model.");
+                }
+            } catch (error) {
+                console.error("Delete model error:", error);
+                alert("Failed to delete model.");
+            }
+        }
+        async function loadMainContent() {
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await fetch("/admin/users", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            const data = await response.json();
+            let usersTable = ` <div>
+        <button class="btn btn-primary" onclick="switchToUserManagement()">
+            User Management
+        </button>
+        <button class="btn btn-primary" onclick="switchToMusicManagement()">
+            Music Management
+        </button>
+        <button class="btn btn-primary" onclick="switchToFeedback()"> <!-- Added feedback button here -->
+            Feedback Management
+        </button>
+    </div>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button><h1>User Management</h1><div class="user-management-container">
+        <div class="user-table-container" >
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by name...">
+                <button onclick="searchByName()" class="search-button">Search</button>
+            </div>
+            <table id="usertable"><tr><th>ID</th><th>Name</th><th>Username</th><th>Is Admin</th><th>Approval</th><th>Update</th><th>Delete</th></tr>`;
+            for (const user of data.users) {
+                usersTable += `<tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.username}</td>
+            <td>${user.is_admin}</td>
+            <td>${user.approval}</td>
+            <td><button class="update-btn" onclick="updateUser(${user.id})">Update</button></td>
+            <td><button class="delete-btn" onclick="deleteUser(${user.id})">Delete</button></td>
+        </tr>`;
+            }
+            usersTable += "</table></div>";
+
+            // Add the form HTML here
+            const formHTML = `
+        <div class="user-form-container">
+            <h2>Add User</h2>
+            <form id="addUserForm" onsubmit="addUser(event)">
+                <label for="Uname">Name:</label>
+                <input type="text" id="Uname" name="Uname" required><br>
+                <label for="Uusername">Username:</label>
+                <input type="text" id="Uusername" name="Uusername" value="" required><br>
+                <label for="Upassword">Password:</label>
+                <input type="password" id="Upassword" name="Upassword" value="">
+               <br>
+                <button type="submit">Add User</button>
+            </form>
+        </div></div>
+    `;
+            usersTable += formHTML;
+
+            document.getElementById("content").innerHTML = usersTable;
+        }
+
+        function searchByName() {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const table = document.getElementById("usertable");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        const nameCell = rows[i].getElementsByTagName("td")[1];
+        if (nameCell) {
+            const nameText = nameCell.textContent || nameCell.innerText;
+            if (nameText.toLowerCase().indexOf(searchValue) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+}
+        function displayLogin() {
+            document.getElementById("content").innerHTML = `
+    <div class="login-container">
+        <div class="form-wrapper">
+            <h1 class="form-title">Login</h1>
+            <form id="loginForm" class="login-form" onsubmit="login(event)">
+                <input type="text" name="username" placeholder="Username" value="" class="form-input">
+                <input type="password" name="password" placeholder="Password" value="" class="form-input">
+                <button type="submit" class="form-button">Login</button>
+            </form>
+        </div>
+    </div>
+`;
+        }
+
+        function login(event) {
+            event.preventDefault(); // prevent the default form submission behavior
+
+            // get form data
+            const form = event.target;
+            const username = form.elements["username"].value;
+            const password = form.elements["password"].value;
+
+            // send login request to server
+            fetch("/admin/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // login successful
+                        form.reset();
+                        alert("successful login");
+                        return response.json();
+                    } else {
+                        // login failed
+                        form.reset();
+                        throw new Error("Login failed");
+                    }
+                })
+                .then((data) => {
+                    // store access token and refresh token in local storage
+                    localStorage.setItem("accessToken", data.access_token);
+                    localStorage.setItem("refreshToken", data.refresh_token);
+                   
+                    // redirect to main content
+                    loadMainContent();
+                })
+                .catch((error) => {
+                    form.reset();
+                    console.error("Login failed:", error);
+                    alert("Login failed. Please try again.");
+                });
+        }
+
+
+        function logout() {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            window.location.reload();
+        }
+
+        async function addUser(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            const form = document.getElementById("addUserForm");
+            const nameInput = form.elements["Uname"];
+            const usernameInput = form.elements["Uusername"];
+            const passwordinput = form.elements["Upassword"]
+
+            // Validate form inputs
+            if (!nameInput.value.trim() || !usernameInput.value.trim() || !passwordinput.value.trim()) {
+                alert("Please enter both name,username and password.");
+                return;
+            }
+
+            const name = nameInput.value.trim();
+            const username = usernameInput.value.trim();
+            const password = passwordinput.value.trim();
+
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await fetch("/admin/users/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({
+                    name: name,
+                    username: username,
+                    password: password,
+                }),
+            });
+
+            if (response.ok) {
+               
+                alert("User added successfully.");
+                
+            } else {
+                
+                const errorData = await response.json();
+                alert(`Failed to add user: ${errorData.message}`);
+            }
+            form.reset();
+            loadMainContent();
+        }
+
+        async function updateUser(userId) {
+            const updatedName = prompt("Enter updated name:");
+            const updatedUsername = prompt("Enter updated username:");
+            const updatedIsAdmin = confirm("Is the user an admin?");
+            const updatedApproval = prompt("Enter updated approval:");
+
+            const updatedUserData = {
+                id: userId,
+                name: updatedName,
+                username: updatedUsername,
+                is_admin: updatedIsAdmin,
+                approval: updatedApproval,
+            };
+
+            try {
+                const accessToken = localStorage.getItem("accessToken");
+                const response = await fetch(`/admin/users`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify(updatedUserData),
+                });
+                if (response.ok) {
+                    alert("User updated successfully.");
+                    loadMainContent(); // Reload the user list after update
+                } else {
+                    throw new Error("Failed to update user.");
+                }
+            } catch (error) {
+                console.error("Update user error:", error);
+                alert("Failed to update user.");
+            }
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm("Are you sure you want to delete this user?")) {
+                return;
+            }
+            try {
+                const accessToken = localStorage.getItem("accessToken");
+                const response = await fetch(`/admin/users/delete/${userId}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                if (response.ok) {
+                    alert("User deleted successfully.");
+                    loadMainContent(); // Reload the user list after deletion
+                } else {
+                    throw new Error("Failed to delete user.");
+                }
+            } catch (error) {
+                console.error("Delete user error:", error);
+                alert("Failed to delete user.");
+            }
+        }
+
+        function switchToFeedback() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+        <div>
+            <button class="btn btn-primary" onclick="switchToUserManagement()">
+                User Management
+            </button>
+            <button class="btn btn-primary" onclick="switchToMusicManagement()">
+                Music Management
+            </button>
+            <button class="btn btn-primary" onclick="switchToFeedback()"> <!-- Added feedback button here -->
+                Feedback Management
+            </button>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <h1>Feedback Management</h1>
+        <div class="feedback-container">
+            <!-- Feedback data will be displayed here -->
+        </div>
+    `;
+
+            fetch('/admin/feedback', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch feedback');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const feedbackList = data.feedback;
+                    let feedbackHTML = '';
+                    feedbackList.forEach(feedback => {
+                        const markAsReadBtnText = feedback.read ? 'Marked' : 'Mark as Read';
+                        const markAsReadBtnColor = feedback.read ? 'black' : 'green';
+                        const markAsReadBtnDisabled = feedback.read ? 'disabled' : '';
+                        feedbackHTML += `
+                <div class="feedback-item">
+                    <p>ID: ${feedback.id}</p>
+                    <p>Message: ${feedback.message}</p>
+                    <p>User ID: ${feedback.user_id}</p>
+                    <p>Timestamp: ${feedback.timestamp}</p>
+                    <button class="btn mark-read-btn" onclick="markAsRead(${feedback.id})" style="background-color: ${markAsReadBtnColor}" ${markAsReadBtnDisabled}>${markAsReadBtnText}</button>
+                    <button class="btn btn-danger delete-btn" onclick="deleteFeedback(${feedback.id})">Delete</button>
+                </div>
+            `;
+                    });
+                    content.querySelector('.feedback-container').innerHTML = feedbackHTML;
+                })
+                .catch(error => {
+                    console.error('Error fetching feedback:', error);
+                    alert('Failed to fetch feedback');
+                });
+        }
+
+        function markAsRead(feedbackId) {
+            // Send a PUT request to mark the feedback as read
+            fetch(`/admin/feedback/${feedbackId}/markasread`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Feedback ID ${feedbackId} marked as read`);
+                        switchToFeedback();
+                        // Optionally, update the UI to reflect the feedback as read
+                    } else {
+                        console.error('Failed to mark feedback as read');
+                        // Handle the error or display an error message
+                    }
+                })
+                .catch(error => {
+                    console.error('Error marking feedback as read:', error);
+                    // Handle the error or display an error message
+                });
+        }
+
+
+        function deleteFeedback(feedbackId) {
+            const confirmation = window.confirm('Are you sure you want to delete this feedback?');
+            if (!confirmation) {
+                return; // If user cancels, do nothing
+            }
+
+            fetch(`/admin/feedback/${feedbackId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete feedback');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Feedback deleted successfully');
+                    // Optionally, you can update the UI or display a success message here
+                    switchToFeedback();
+                    alert('deleted');
+                })
+                .catch(error => {
+                    console.error('Error deleting feedback:', error);
+                    alert('Failed to delete feedback');
+                });
+        }
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/static/sw.js');
+          });
+        }
+      </script>
+      
+</body>
+
+</html>

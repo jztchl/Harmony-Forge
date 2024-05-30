@@ -22,21 +22,12 @@ from functools import wraps
 import bleach
 import threading
 import time
+from config import Config
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '22e9b014f5c5a61d3c307af0b366eb28'
-#db
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-#jwtconfig
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=3)
-app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
-#mailserver
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_DEFAULT_SENDER'] = 'vasujj00@gmail.com'
-app.config['MAIL_USERNAME'] = 'vasujj00@gmail.com'
-app.config['MAIL_PASSWORD'] = 'iyov vqdw ccci avdj'
+app.config.from_object(Config)
+
 db.init_app(app)
 jwt = JWTManager(app)
 mail = Mail(app)

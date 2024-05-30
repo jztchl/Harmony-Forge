@@ -1,0 +1,13 @@
+{
+  "name": "Dashboard",
+  "short_name": "admin",
+  "start_url": "/admin/dashboard",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/static/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

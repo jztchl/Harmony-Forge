@@ -1,5 +1,6 @@
 # Exclude specific files
 ngrok.exe
+config.py
 
 # Exclude directories and their contents
 dataset/
