@@ -142,7 +142,54 @@ The Harmony Forge project includes an Android Flutter app that serves as the cli
 
 ### Sample Music File Space:
 
-You can add your sample music files to the `sample_music` directory inside the Flutter app. These files can be used for testing and demonstration purposes within the app.
+
+    <h1>Multiple Instrument Samples</h1>
+    <audio controls>
+        <source src="samples/Multiple%20instrument/1.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Multiple%20instrument/2.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Multiple%20instrument/3.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Multiple%20instrument/4.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+
+    <h1>Single Instrument Samples</h1>
+    <audio controls>
+        <source src="samples/Single%20Instrument1.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Single%20Instrument2.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Single%20Instrument3.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Single%20Instrument4.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+    <br>
+    <audio controls>
+        <source src="samples/Single%20Instrument5.aac" type="audio/aac">
+        Your browser does not support the audio element.
+    </audio>
+
 
 ---
 
