@@ -53,7 +53,7 @@ The Flask server acts as the backend for the Harmony Forge project. It handles m
 
 4. Set up environment variables:
    Configure the following in the config.py after adding it:
-   ```plaintext
+   ```bash
 import os
 from datetime import timedelta
 
