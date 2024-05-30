@@ -84,9 +84,6 @@ class Config:
    python control.py
    ```
 
-### Sample Music File Space:
-
-You can find sample music files in the `sample_music` directory. These files can be used to train custom LSTM models and generate diverse MIDI compositions with multiple instrument tracks.
 
 ---
 
