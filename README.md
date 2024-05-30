@@ -55,7 +55,7 @@ The Flask server acts as the backend for the Harmony Forge project. It handles m
    Configure the following in the config.py after adding it:
    ```plaintext
 
-
+```
 class Config: 
     SECRET_KEY = 'your_secret_key_here'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///users.db'
