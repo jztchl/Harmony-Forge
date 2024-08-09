@@ -147,11 +147,11 @@ The Harmony Forge project includes an Android Flutter app that serves as the cli
 - [Download Multiple Instrument Sample 4](samples/Multiple%20instrument/4.aac)
 
 ### Single Instrument Samples
-- [Download Single Instrument Sample 1](samples/Single%20Instrument1.aac)
-- [Download Single Instrument Sample 2](samples/Single%20Instrument2.aac)
-- [Download Single Instrument Sample 3](samples/Single%20Instrument3.aac)
-- [Download Single Instrument Sample 4](samples/Single%20Instrument4.aac)
-- [Download Single Instrument Sample 5](samples/Single%20Instrument5.aac)
+- [Download Single Instrument Sample 1](samples/Single%20Instrument/1.aac)
+- [Download Single Instrument Sample 2](samples/Single%20Instrument/2.aac)
+- [Download Single Instrument Sample 3](samples/Single%20Instrument/3.aac)
+- [Download Single Instrument Sample 4](samples/Single%20Instrument/4.aac)
+- [Download Single Instrument Sample 5](samples/Single%20Instrument/5.aac)
 
 
 
